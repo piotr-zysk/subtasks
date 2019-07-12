@@ -25,7 +25,7 @@ export class AppComponent {
     matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
 
   constructor(zone: NgZone) {
-    this.mediaMatcher.addListener(mql =>
+    this.mediaMatcher.addEventListener('change', mql =>
       zone.run(() => this.mediaMatcher = this.mediaMatcher));
   }
 
