@@ -4,14 +4,14 @@ import { CommonModule } from '@angular/common';
 import { TaskRoutingModule } from './task-routing.module';
 import { TasklistComponent } from './tasklist.component';
 
-import { MaterialModule } from '../shared/material.module';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [TasklistComponent],
   imports: [
     CommonModule,
     TaskRoutingModule,
-    MaterialModule
+    SharedModule
   ]
 })
 export class TaskModule { }

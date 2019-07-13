@@ -15,4 +15,7 @@ export class TasklistComponent implements OnInit {
     this.tasks = this.dataService.loadAllTasks();
   }
 
+  processSubtasks(id: number) {
+    console.log(id);
+  }
 }
