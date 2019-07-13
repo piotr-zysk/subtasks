@@ -7,12 +7,25 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
 
-      <div *ngFor="let item of task.items">
+    <mat-panel-description>
+      edit // toggle edit mode (add subtasks, edit all titles)
+    </mat-panel-description>
+
+
+    <div *ngFor="let item of task.items">
       <mat-checkbox>{{item.title}}</mat-checkbox>
-      </div>
+    </div>
 
-    </mat-expansion-panel>
-
-  </mat-accordion>
+  </mat-expansion-panel>
 
 
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        + new task
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+
+  </mat-expansion-panel>
+
+</mat-accordion>
