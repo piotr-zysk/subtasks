@@ -1,10 +1,15 @@
 <mat-toolbar color="primary" class="toolbar">
+
+    <button mat-button class="sidenav-toggle" (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+
   <span>Subtasks</span>
 </mat-toolbar>
 
 
 <mat-sidenav-container class="app-sidenav-container">
-  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z3" mode="side" [opened]='checked && !isScreenSmall()' [mode]="isScreenSmall() ? 'over' : 'side'">
+  <mat-sidenav #sidenav class="app-sidenav mat-elevation-z3" mode="side" [opened]='!isScreenSmall()' [mode]="isScreenSmall() ? 'over' : 'side'">
     <mat-list>
       <mat-list-item *ngFor="let item of items">{{item}}</mat-list-item>
     </mat-list>
@@ -12,7 +17,6 @@
   </mat-sidenav>
   <mat-sidenav-content>
 
-    <mat-checkbox checked='checked' (click)='toggle_sidenav()'>Side Menu {{ sidenavStatus }}</mat-checkbox>
     <router-outlet></router-outlet>
 
   </mat-sidenav-content>

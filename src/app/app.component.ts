@@ -12,7 +12,6 @@ const SMALL_WIDTH_BREAKPOINT = 720;
 })
 export class AppComponent {
   title = 'subtasks';
-  checked = true;
   sidenavStatus = 'ON';
 
   items = [
@@ -34,10 +33,4 @@ export class AppComponent {
     return this.mediaMatcher.matches;
   }
 
-
-  toggle_sidenav() {
-    this.checked = !this.checked;
-    this.sidenavStatus = (this.sidenavStatus === 'ON') ? 'OFF' : 'ON';
-
-  }
 }
