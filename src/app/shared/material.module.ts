@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatExpansionModule} from '@angular/material/expansion';
+
 
 import {
   MatAutocompleteModule,
@@ -12,7 +14,6 @@ import {
   MatChipsModule,
   MatDatepickerModule,
   MatDialogModule,
-  MatExpansionModule,
   MatFormFieldModule,
   MatGridListModule,
   MatIconModule,
@@ -36,9 +37,8 @@ import {
   MatStepperModule
 } from '@angular/material';
 
-@NgModule({
-  imports: [
-    BrowserAnimationsModule,
+const modules = [
+    //BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
@@ -71,40 +71,10 @@ import {
     MatTableModule,
     MatTabsModule,
     MatStepperModule
-  ],
-  exports: [
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatCheckboxModule,
-    MatToolbarModule,
-    MatButtonToggleModule,
-    MatTooltipModule,
-    MatCardModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatGridListModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatNativeDateModule,
-    MatPaginatorModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule,
-    MatRadioModule,
-    MatRippleModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSliderModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatSortModule,
-    MatTableModule,
-    MatTabsModule,
-    MatStepperModule
-  ]
+]
+
+@NgModule({
+  imports: [...modules],
+  exports: [...modules]
 })
 export class MaterialModule { }

@@ -1,8 +1,4 @@
-export class TaskItem {
-    id: number;
-    title: string;
-}
-
+import { TaskItem } from './taskitem';
 
 export class Task {
     id: number;

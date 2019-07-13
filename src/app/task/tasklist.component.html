@@ -1,3 +1,18 @@
-<p>
-  tasklist works!
-</p>
+<mat-accordion>
+
+    <mat-expansion-panel *ngFor="let task of tasks">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+            <mat-checkbox (click)="onEvent($event);">{{task.title}}</mat-checkbox>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <div *ngFor="let item of task.items">
+      <mat-checkbox>{{item.title}}</mat-checkbox>
+      </div>
+
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+
