@@ -36,6 +36,7 @@ import {
   MatTabsModule,
   MatStepperModule
 } from '@angular/material';
+import { StopEventPropagationDirective } from './stop-event-propagation.directive';
 
 const modules = [
     //BrowserAnimationsModule,
@@ -75,6 +76,7 @@ const modules = [
 
 @NgModule({
   imports: [...modules],
-  exports: [...modules]
+  exports: [...modules, StopEventPropagationDirective ],
+  declarations: [StopEventPropagationDirective]
 })
 export class MaterialModule { }

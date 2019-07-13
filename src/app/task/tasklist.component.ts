@@ -15,9 +15,4 @@ export class TasklistComponent implements OnInit {
     this.tasks = this.dataService.loadAllTasks();
   }
 
-  // stop propagating click event to paren component
-  onEvent(event) {
-    event.stopPropagation();
- }
-
 }

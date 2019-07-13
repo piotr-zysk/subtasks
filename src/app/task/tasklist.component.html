@@ -3,7 +3,7 @@
     <mat-expansion-panel *ngFor="let task of tasks">
       <mat-expansion-panel-header>
         <mat-panel-title>
-            <mat-checkbox (click)="onEvent($event);">{{task.title}}</mat-checkbox>
+            <mat-checkbox appStopEventPropagation>{{task.title}}</mat-checkbox>
         </mat-panel-title>
       </mat-expansion-panel-header>
 
