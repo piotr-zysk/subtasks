@@ -70,7 +70,7 @@ const modules = [
     MatTableModule,
     MatTabsModule,
     MatStepperModule
-]
+];
 
 @NgModule({
   imports: [...modules],

@@ -1,9 +1,10 @@
 <mat-accordion>
 
-    <mat-expansion-panel *ngFor="let task of tasks">
+    <mat-expansion-panel *ngFor="let taskId of tasks.ids">
       <mat-expansion-panel-header>
         <mat-panel-title>
-            <mat-checkbox appStopEventPropagation (click)="processSubtasks(task.id)">{{task.title}}</mat-checkbox>
+            <mat-checkbox appStopEventPropagation id="task{{taskId}}" (click)="processSubtasks(taskId)"
+            [(ngModel)]="tasks.entities[taskId].done">{{tasks.entities[taskId].title}}</mat-checkbox>
         </mat-panel-title>
       </mat-expansion-panel-header>
 
@@ -12,8 +13,8 @@
     </mat-panel-description>
 
 
-    <div *ngFor="let item of task.items">
-      <mat-checkbox>{{item.title}}</mat-checkbox>
+    <div *ngFor="let item of tasks.entities[taskId].items; let i2 = index">
+      <mat-checkbox [(ngModel)]="item.done">{{item.title}}</mat-checkbox>
     </div>
 
   </mat-expansion-panel>
@@ -29,3 +30,4 @@
   </mat-expansion-panel>
 
 </mat-accordion>
+
