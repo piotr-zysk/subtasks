@@ -1,18 +1,65 @@
 import { Component, OnInit } from '@angular/core';
 import { DataService } from './services/data.service';
+import { EntityState } from './models/entitystate';
+import { Task } from './models/task';
 
 @Component({
   selector: 'app-tasklist',
   templateUrl: './tasklist.component.html',
-  styleUrls: ['./tasklist.component.sass']
+  styleUrls: ['./tasklist.component.scss']
 })
 export class TasklistComponent implements OnInit {
-  tasks = [];
+
+  get tasks(): EntityState<Task> {
+    return this.dataService.getAllTasks();
+  }
+
+  // this is actually not needed as long as we reference tasks and only mutate that object
+  set tasks(value: EntityState<Task>) {
+    this.dataService.setAllTasks(value);
+  }
 
   constructor(private dataService: DataService) { }
 
   ngOnInit() {
-    this.tasks = this.dataService.loadAllTasks();
+    // const t = new Task();
+    // t.id = 100;
+    // t.title = 'bubu';
+    // t.done = true;
+    // t.items = [{ id: 2, title: 'buba1' }, { id: 3, title: 'buba2' }];
+
+    // const newTasks: EntityState<Task> = {ids: [], entities: {}};
+    // newTasks.entities = this.tasks.entities;
+    // newTasks.entities[100] = t;
+    // newTasks.ids = this.tasks.ids;
+    // newTasks.ids.unshift(100);
+
+    // this.tasks = newTasks;   //add if state immutable
+
+    // or mutate existing state
+    // this.tasks.entities[100] = t;
+    // this.tasks.ids.push(100);
+
+    console.log(this.tasks.ids);
   }
 
+  processTask(id: number) {
+
+    if (!this.tasks.entities[id].done) {
+      this.tasks.entities[id].items.forEach(element => {
+        element.done = true;
+      });
+    }
+  }
+
+
+  processSubtask(taskId: number, subtaskIndex: number, subtaskId: number) {
+    if (!this.tasks.entities[taskId].items[subtaskIndex].done) {
+      if (this.tasks.entities[taskId].items.every(el => el.done || el.id === subtaskId)) {
+        this.tasks.entities[taskId].done = true;
+      }
+    } else {
+      this.tasks.entities[taskId].done = false;
+    }
+  }
 }

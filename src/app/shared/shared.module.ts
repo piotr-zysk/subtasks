@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-//import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
 
@@ -39,7 +38,6 @@ import {
 import { StopEventPropagationDirective } from './stop-event-propagation.directive';
 
 const modules = [
-    //BrowserAnimationsModule,
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
@@ -72,11 +70,11 @@ const modules = [
     MatTableModule,
     MatTabsModule,
     MatStepperModule
-]
+];
 
 @NgModule({
   imports: [...modules],
   exports: [...modules, StopEventPropagationDirective ],
   declarations: [StopEventPropagationDirective]
 })
-export class MaterialModule { }
+export class SharedModule { }
