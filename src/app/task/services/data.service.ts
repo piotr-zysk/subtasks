@@ -22,7 +22,7 @@ export class DataService {
   private tasks: EntityState<Task> = {
     ids: [1, 11],
     entities: {
-      1: { id: 1, title: 'buba', done: false, items: [{ id: 2, title: 'buba1' }, { id: 2, title: 'buba2' }] },
+      1: { id: 1, title: 'buba', done: false, items: [{ id: 2, title: 'buba1' }, { id: 3, title: 'buba2' }] },
       11: {
         id: 11, title: 'epdflepfjrj', items: [
           { id: 13, title: 'deodjeo' }, { id: 14, title: 'edeoepppw' }, { id: 15, title: 'eded dwd   wedwew' }
@@ -34,7 +34,11 @@ export class DataService {
 
   constructor() { }
 
-  loadAllTasks(): EntityState<Task> {
+  getAllTasks(): EntityState<Task> {
     return this.tasks;
+  }
+
+  setAllTasks(tasks: EntityState<Task>) {
+    this.tasks = tasks;
   }
 }

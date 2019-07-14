@@ -1,4 +1,4 @@
 export interface EntityState<V> {
-  ids: string[] | number[];
+  ids: number[];
   entities: { [id: number]: V };
 }
