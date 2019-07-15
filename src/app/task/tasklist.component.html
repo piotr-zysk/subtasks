@@ -2,14 +2,19 @@
 
   <mat-expansion-panel *ngFor="let taskId of tasks.ids">
     <mat-expansion-panel-header>
-
+      <mat-panel-title>
       <mat-checkbox appStopEventPropagation id="task{{taskId}}" (click)="processTask(taskId)"
         [(ngModel)]="tasks.entities[taskId].done">&nbsp;&nbsp;&nbsp;</mat-checkbox>
 
       <span appStopEventPropagation
         (click)="openDialog(tasks.entities[taskId])">{{tasks.entities[taskId].title}}</span>
+      </mat-panel-title>
+      
 
-
+      <div class="task-options">
+        edit | delete &nbsp;&nbsp;
+      </div>
+    
     </mat-expansion-panel-header>
 
     edit // toggle edit mode (add subtasks, edit all titles)
