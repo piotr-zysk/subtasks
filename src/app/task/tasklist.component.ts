@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DataService } from './services/data.service';
 import { EntityState } from './models/entitystate';
 import { Task } from './models/task';
+import { TitleEditDialogComponent } from './title-edit-dialog/title-edit-dialog.component';
 
 @Component({
   selector: 'app-tasklist',
@@ -19,7 +21,7 @@ export class TasklistComponent implements OnInit {
     this.dataService.setAllTasks(value);
   }
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, public dialog: MatDialog) { }
 
   ngOnInit() {
     // const t = new Task();
@@ -62,4 +64,17 @@ export class TasklistComponent implements OnInit {
       this.tasks.entities[taskId].done = false;
     }
   }
+
+  openDialog(taskId): void {
+    const dialogRef = this.dialog.open(TitleEditDialogComponent, {
+      width: '250px',
+      data: {name: taskId}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      //this.animal = result;
+    });
+  }
+
 }
