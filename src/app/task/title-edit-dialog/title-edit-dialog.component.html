@@ -1,0 +1,10 @@
+<h1 mat-dialog-title>Rename Task</h1>
+<div mat-dialog-content>
+  <mat-form-field class="dialog-input">
+    <input matInput [(ngModel)]="data.taskTitle" (keydown.enter)="onKeyEnter()">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Save</button>
+</div>
