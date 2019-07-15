@@ -1,9 +1,13 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { DataService } from './services/data.service';
 import { EntityState } from './models/entitystate';
 import { Task } from './models/task';
 import { TitleEditDialogComponent } from './title-edit-dialog/title-edit-dialog.component';
+import { fromEvent } from 'rxjs';
+import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+
+
 
 @Component({
   selector: 'app-tasklist',
@@ -12,10 +16,18 @@ import { TitleEditDialogComponent } from './title-edit-dialog/title-edit-dialog.
 })
 export class TasklistComponent implements OnInit {
 
+  taskFilter = '';
+
+  get filteredTaskIds(): number[] {
+    return this.dataService.filteredTaskIds;
+  }
+  set filteredTaskIds(value: number[]) {
+    this.dataService.filteredTaskIds = value;
+  }
+
   get tasks(): EntityState<Task> {
     return this.dataService.getAllTasks();
   }
-
   // this is actually not needed as long as we reference tasks and only mutate that object
   set tasks(value: EntityState<Task>) {
     this.dataService.setAllTasks(value);
@@ -46,14 +58,12 @@ export class TasklistComponent implements OnInit {
   }
 
   processTask(id: number) {
-
     if (!this.tasks.entities[id].done) {
       this.tasks.entities[id].items.forEach(element => {
         element.done = true;
       });
     }
   }
-
 
   processSubtask(taskId: number, subtaskIndex: number, subtaskId: number) {
     if (!this.tasks.entities[taskId].items[subtaskIndex].done) {
@@ -65,7 +75,7 @@ export class TasklistComponent implements OnInit {
     }
   }
 
-  openDialog(task, subtaskIndex?): void {
+  openTitleRenameDialog(task, subtaskIndex?): void {
 
     let title: string;
     if (subtaskIndex === undefined) {
@@ -77,7 +87,7 @@ export class TasklistComponent implements OnInit {
 
     const dialogRef = this.dialog.open(TitleEditDialogComponent, {
       width: '400px',
-      data: {taskTitle: title, subtaskIndex, taskId: task.id}
+      data: { taskTitle: title, subtaskIndex, taskId: task.id }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -88,5 +98,4 @@ export class TasklistComponent implements OnInit {
       }
     });
   }
-
 }

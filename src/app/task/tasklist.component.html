@@ -1,14 +1,21 @@
+<app-filterby></app-filterby>
+
 <mat-accordion>
 
-  <mat-expansion-panel *ngFor="let taskId of tasks.ids">
+  <mat-expansion-panel *ngFor="let taskId of filteredTaskIds">
     <mat-expansion-panel-header>
+      <mat-panel-title>
+        <mat-checkbox appStopEventPropagation id="task{{taskId}}" (click)="processTask(taskId)"
+          [(ngModel)]="tasks.entities[taskId].done">&nbsp;&nbsp;&nbsp;</mat-checkbox>
 
-      <mat-checkbox appStopEventPropagation id="task{{taskId}}" (click)="processTask(taskId)"
-        [(ngModel)]="tasks.entities[taskId].done">&nbsp;&nbsp;&nbsp;</mat-checkbox>
+        <span appStopEventPropagation
+          (click)="openTitleRenameDialog(tasks.entities[taskId])">{{tasks.entities[taskId].title}}</span>
+      </mat-panel-title>
 
-      <span appStopEventPropagation
-        (click)="openDialog(tasks.entities[taskId])">{{tasks.entities[taskId].title}}</span>
 
+      <div class="task-options">
+        edit | delete &nbsp;&nbsp;
+      </div>
 
     </mat-expansion-panel-header>
 
@@ -16,8 +23,7 @@
 
     <div *ngFor="let item of tasks.entities[taskId].items; let i2 = index">
       <mat-checkbox (click)="processSubtask(taskId,i2,item.id)" [(ngModel)]="item.done"></mat-checkbox>
-      <span appStopEventPropagation
-        (click)="openDialog(tasks.entities[taskId],i2)">{{item.title}}</span>
+      <span appStopEventPropagation (click)="openDialog(tasks.entities[taskId],i2)">{{item.title}}</span>
     </div>
 
   </mat-expansion-panel>
