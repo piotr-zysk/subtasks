@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { DataService } from './services/data.service';
 import { EntityState } from './models/entitystate';
 import { Task } from './models/task';
+import { TitleEditDialogComponent } from './title-edit-dialog/title-edit-dialog.component';
 
 @Component({
   selector: 'app-tasklist',
@@ -19,7 +21,7 @@ export class TasklistComponent implements OnInit {
     this.dataService.setAllTasks(value);
   }
 
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, public dialog: MatDialog) { }
 
   ngOnInit() {
     // const t = new Task();
@@ -40,7 +42,7 @@ export class TasklistComponent implements OnInit {
     // this.tasks.entities[100] = t;
     // this.tasks.ids.push(100);
 
-    console.log(this.tasks.ids);
+    // console.log(this.tasks.ids);
   }
 
   processTask(id: number) {
@@ -62,4 +64,29 @@ export class TasklistComponent implements OnInit {
       this.tasks.entities[taskId].done = false;
     }
   }
+
+  openDialog(task, subtaskIndex?): void {
+
+    let title: string;
+    if (subtaskIndex === undefined) {
+      subtaskIndex = -1;
+      title = task.title;
+    } else {
+      title = task.items[subtaskIndex].title;
+    }
+
+    const dialogRef = this.dialog.open(TitleEditDialogComponent, {
+      width: '400px',
+      data: {taskTitle: title, subtaskIndex, taskId: task.id}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result.subtaskIndex === -1) {
+        this.tasks.entities[result.taskId].title = result.taskTitle;
+      } else {
+        this.tasks.entities[result.taskId].items[subtaskIndex].title = result.taskTitle;
+      }
+    });
+  }
+
 }
