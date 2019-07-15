@@ -42,7 +42,7 @@ export class TasklistComponent implements OnInit {
     // this.tasks.entities[100] = t;
     // this.tasks.ids.push(100);
 
-    console.log(this.tasks.ids);
+    // console.log(this.tasks.ids);
   }
 
   processTask(id: number) {
@@ -65,15 +65,27 @@ export class TasklistComponent implements OnInit {
     }
   }
 
-  openDialog(taskId): void {
+  openDialog(task, subtaskIndex?): void {
+
+    let title: string;
+    if (subtaskIndex === undefined) {
+      subtaskIndex = -1;
+      title = task.title;
+    } else {
+      title = task.items[subtaskIndex].title;
+    }
+
     const dialogRef = this.dialog.open(TitleEditDialogComponent, {
-      width: '250px',
-      data: {name: taskId}
+      width: '400px',
+      data: {taskTitle: title, subtaskIndex, taskId: task.id}
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      //this.animal = result;
+      if (result.subtaskIndex === -1) {
+        this.tasks.entities[result.taskId].title = result.taskTitle;
+      } else {
+        this.tasks.entities[result.taskId].items[subtaskIndex].title = result.taskTitle;
+      }
     });
   }
 

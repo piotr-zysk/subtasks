@@ -1,7 +1,9 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 export interface DialogData {
+  taskTitle: string;
+  subtaskIndex: number;
   taskId: number;
 }
 
@@ -16,6 +18,10 @@ export class TitleEditDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
 
   ngOnInit() {
+  }
+
+  onKeyEnter(): void {
+    this.dialogRef.close(this.data);
   }
 
   onNoClick(): void {
