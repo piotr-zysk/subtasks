@@ -91,10 +91,12 @@ export class TasklistComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result.subtaskIndex === -1) {
-        this.tasks.entities[result.taskId].title = result.taskTitle;
-      } else {
-        this.tasks.entities[result.taskId].items[subtaskIndex].title = result.taskTitle;
+      if (result) {
+        if (result.subtaskIndex === -1) {
+          this.tasks.entities[result.taskId].title = result.taskTitle;
+        } else {
+          this.tasks.entities[result.taskId].items[subtaskIndex].title = result.taskTitle;
+        }
       }
     });
   }
