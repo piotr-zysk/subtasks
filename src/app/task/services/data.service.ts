@@ -17,7 +17,7 @@ export class DataService {
   ]
   */
 
-
+  filteredTaskIds: number[];
 
   private tasks: EntityState<Task> = {
     ids: [1, 11],
