@@ -8,15 +8,19 @@ import { SharedModule } from '../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { TitleEditDialogComponent } from './title-edit-dialog/title-edit-dialog.component';
 import { FilterbyComponent } from './filterby/filterby.component';
+import { TaskDeleteDialogComponent } from './task-delete-dialog/task-delete-dialog.component';
 
 @NgModule({
-  declarations: [TasklistComponent, TitleEditDialogComponent, FilterbyComponent],
+  declarations: [TasklistComponent, TitleEditDialogComponent, FilterbyComponent, TaskDeleteDialogComponent],
   imports: [
     CommonModule,
     TaskRoutingModule,
     SharedModule,
     FormsModule
   ],
-  entryComponents: [TitleEditDialogComponent]
+  entryComponents: [
+    TitleEditDialogComponent,
+    TaskDeleteDialogComponent
+  ]
 })
 export class TaskModule { }
