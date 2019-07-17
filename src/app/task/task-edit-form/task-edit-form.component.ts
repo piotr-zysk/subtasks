@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { EntityState } from '../models/entitystate';
 
@@ -23,12 +23,12 @@ export class TaskEditFormComponent implements OnInit {
   set tasks(value: EntityState<Task>) {
     this.dataService.setAllTasks(value);
   }
-  constructor(private dataService: DataService) { }
+  constructor(private dataService: DataService, private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.taskForm = new FormGroup({
-      title: new FormControl(),
-      done: new FormControl()
+    this.taskForm = this.fb.group({
+      title: this.task.title,
+      done: this.task.done
      });
   }
 
