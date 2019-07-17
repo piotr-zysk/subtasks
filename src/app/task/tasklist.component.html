@@ -26,7 +26,7 @@
 
     <div *ngFor="let item of tasks.entities[taskId].items; let i2 = index">
       <mat-checkbox (click)="processSubtask(taskId,i2,item.id)" [(ngModel)]="item.done"></mat-checkbox>
-      <span appStopEventPropagation (click)="openDialog(tasks.entities[taskId],i2)">{{item.title}}</span>
+      <span appStopEventPropagation (click)="openTitleRenameDialog(tasks.entities[taskId],i2)">{{item.title}}</span>
     </div>
 
   </mat-expansion-panel>
