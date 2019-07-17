@@ -40,6 +40,7 @@ export class TaskEditFormComponent implements OnInit {
     console.log(this.taskForm);
     if (this.taskForm.dirty && this.taskForm.valid) {
       this.tasks.entities[this.task.id].title = this.taskForm.value.title;
+      this.tasks.entities[this.task.id].done = this.taskForm.value.done;
     }
 
     this.formClose.emit(false);
