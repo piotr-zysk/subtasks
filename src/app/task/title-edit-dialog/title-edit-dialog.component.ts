@@ -21,7 +21,11 @@ export class TitleEditDialogComponent implements OnInit {
   }
 
   onKeyEnter(): void {
-    this.dialogRef.close(this.data);
+    if (this.data.taskTitle) {
+      this.dialogRef.close(this.data);
+    } else {
+      this.dialogRef.close();
+    }
   }
 
   onNoClick(): void {
