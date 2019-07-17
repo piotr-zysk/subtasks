@@ -21,6 +21,5 @@ export class TaskEditFormDialogComponent implements OnInit {
 
   onFormClose(save: boolean): void {
     this.dialogRef.close();
-    console.log(save);
   }
 }

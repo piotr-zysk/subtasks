@@ -26,5 +26,5 @@
 
 
   <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="save()" [disabled]="!(taskForm.dirty && taskForm.valid)">Save Changes</button>
+  <button mat-button (click)="save()" [disabled]="!((taskForm.dirty || formChanged) && taskForm.valid)">Save Changes</button>
 

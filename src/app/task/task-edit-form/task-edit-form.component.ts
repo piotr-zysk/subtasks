@@ -3,6 +3,7 @@ import { Task } from '../models/task';
 import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { EntityState } from '../models/entitystate';
+import { TaskItem } from '../models/taskitem';
 
 @Component({
   selector: 'app-task-edit-form',
@@ -26,6 +27,7 @@ export class TaskEditFormComponent implements OnInit {
   constructor(private dataService: DataService, private fb: FormBuilder) { }
 
   items = [];
+  formChanged = false;
 
   ngOnInit() {
 
@@ -64,21 +66,42 @@ export class TaskEditFormComponent implements OnInit {
   }
 
   deleteItem(id: number) {
-    console.log(id);
     this.items_.removeAt(id);
+    this.formChanged = true;
+    // console.log(this.taskForm);
     return false;
   }
-  
+
 
   onCancel() {
     this.formClose.emit(false);
   }
 
   save() {
-    console.log(this.taskForm);
-    if (this.taskForm.dirty && this.taskForm.valid) {
-      this.tasks.entities[this.task.id].title = this.taskForm.value.title;
-      this.tasks.entities[this.task.id].done = this.taskForm.value.done;
+    if ((this.taskForm.dirty || this.formChanged) && this.taskForm.valid) {
+      const t = new Task();
+      t.id = this.taskForm.value.id;
+      t.title = this.taskForm.value.title;
+      t.done = this.taskForm.value.done;
+      t.items = [];
+
+      // console.log(this.taskForm.value.items.length);
+      // tslint:disable-next-line: prefer-for-of
+      for (let x = 0; x < this.taskForm.value.items.length; x++) {
+        const ti = new TaskItem();
+        ti.id = this.taskForm.value.items[x].id;
+        ti.title = this.taskForm.value.items[x].title;
+        ti.done = this.taskForm.value.items[x].done;
+        t.items.push(ti);
+      }
+
+      this.tasks.entities[this.task.id] = t;
+      // console.log(t);
+      // console.log(this.tasks.entities[this.task.id] );
+
+      // this.tasks.entities[this.task.id].title = this.taskForm.value.title;
+      // this.tasks.entities[this.task.id].done = this.taskForm.value.done;
+      // console.log(this.taskForm);
     }
 
     this.formClose.emit(false);
