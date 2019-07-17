@@ -31,7 +31,6 @@ export class TaskEditFormComponent implements OnInit {
 
 
   this.task.items.forEach(el => {
-    console.log(el.title);
     this.items.push(this.fb.group({
       title: el.title,
       done: el.done
@@ -46,13 +45,21 @@ export class TaskEditFormComponent implements OnInit {
       items: this.fb.array(this.items)
      });
 
-  console.log(this.taskForm);
   }
 
   get items_() {
     return this.taskForm.get('items') as FormArray;
   }
 
+  addItem() {
+      this.items_.push(this.fb.group({
+        title: '',
+        done: false
+      })
+    );
+
+      return false;
+  }
 
   onCancel() {
     this.formClose.emit(false);
