@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task';
-import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { EntityState } from '../models/entitystate';
 
@@ -25,12 +25,34 @@ export class TaskEditFormComponent implements OnInit {
   }
   constructor(private dataService: DataService, private fb: FormBuilder) { }
 
+  items = [];
+
   ngOnInit() {
-    this.taskForm = this.fb.group({
+
+
+  this.task.items.forEach(el => {
+    console.log(el.title);
+    this.items.push(this.fb.group({
+      title: el.title,
+      done: el.done
+    }));
+
+  });
+
+
+  this.taskForm = this.fb.group({
       title: this.task.title,
-      done: this.task.done
+      done: this.task.done,
+      items: this.fb.array(this.items)
      });
+
+  console.log(this.taskForm);
   }
+
+  get items_() {
+    return this.taskForm.get('items') as FormArray;
+  }
+
 
   onCancel() {
     this.formClose.emit(false);
