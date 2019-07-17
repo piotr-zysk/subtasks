@@ -1,6 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task';
 import { FormGroup, FormControl } from '@angular/forms';
+import { DataService } from '../services/data.service';
+import { EntityState } from '../models/entitystate';
 
 @Component({
   selector: 'app-task-edit-form',
@@ -14,7 +16,14 @@ export class TaskEditFormComponent implements OnInit {
 
   taskForm: FormGroup;
 
-  constructor() { }
+  get tasks(): EntityState<Task> {
+    return this.dataService.getAllTasks();
+  }
+  // this is actually not needed as long as we reference tasks and only mutate that object
+  set tasks(value: EntityState<Task>) {
+    this.dataService.setAllTasks(value);
+  }
+  constructor(private dataService: DataService) { }
 
   ngOnInit() {
     this.taskForm = new FormGroup({
@@ -28,6 +37,11 @@ export class TaskEditFormComponent implements OnInit {
   }
 
   save() {
+    console.log(this.taskForm);
+    if (this.taskForm.dirty && this.taskForm.valid) {
+      this.tasks.entities[this.task.id].title = this.taskForm.value.title;
+    }
+
     this.formClose.emit(false);
   }
 }
