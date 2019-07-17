@@ -1,0 +1,13 @@
+<form (ngSubmit)="save()" [formGroup]="taskForm">
+    <mat-form-field class="title-input">
+        <input matInput placeholder="Task Title" value="{{this.task.title}}" formControlName="title" required>
+      </mat-form-field>
+
+</form>
+
+
+
+
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="save()" [disabled]="!(taskForm.dirty && taskForm.valid)">Save Changes</button>
+

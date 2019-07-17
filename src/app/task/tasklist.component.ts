@@ -4,8 +4,10 @@ import { DataService } from './services/data.service';
 import { EntityState } from './models/entitystate';
 import { Task } from './models/task';
 import { TitleEditDialogComponent } from './title-edit-dialog/title-edit-dialog.component';
-import { fromEvent } from 'rxjs';
+import { fromEvent, from } from 'rxjs';
 import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { TaskDeleteDialogComponent } from './task-delete-dialog/task-delete-dialog.component';
+import { TaskEditFormDialogComponent } from './task-edit-form-dialog/task-edit-form-dialog.component';
 
 
 
@@ -36,6 +38,13 @@ export class TasklistComponent implements OnInit {
   constructor(private dataService: DataService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    // const filteredTasksIdsAsync = from(this.filteredTaskIds);
+
+    // filteredTasksIdsAsync.subscribe(data => {
+    //     console.log('Observable.next:');
+    //     console.log(data);
+    // });
+
     // const t = new Task();
     // t.id = 100;
     // t.title = 'bubu';
@@ -97,6 +106,35 @@ export class TasklistComponent implements OnInit {
         } else {
           this.tasks.entities[result.taskId].items[subtaskIndex].title = result.taskTitle;
         }
+      }
+    });
+  }
+
+  openTaskDeleteDialog(task: Task): void {
+    const dialogRef = this.dialog.open(TaskDeleteDialogComponent, {
+      width: '400px',
+      data: { task }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.filteredTaskIds = this.filteredTaskIds.filter(el => el !== result.task.id);
+        this.tasks.ids = this.tasks.ids.filter(el => el !== result.task.id);
+        delete this.tasks.entities[result.task.id];
+        // console.log('Delete task: ' + task.id);
+        // console.log(this.tasks);
+      }
+    });
+  }
+
+  openTaskEditFormDialog(task: Task): void {
+    const dialogRef = this.dialog.open(TaskEditFormDialogComponent, {
+      width: '600px',
+      data: { task }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
       }
     });
   }
