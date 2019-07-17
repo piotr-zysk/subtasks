@@ -12,6 +12,7 @@
         </mat-form-field>
         &nbsp;
         <mat-checkbox formControlName="done"  id="{{'s'+i}}">Done</mat-checkbox>
+        <button mat-button (click)="deleteItem(i)"><mat-icon>delete</mat-icon></button>
       </div>
     </div>
 
