@@ -19,7 +19,7 @@ export class TaskDeleteDialogComponent implements OnInit {
   ngOnInit() {
   }
 
-  onNoClick(): void {
+  onCancel(): void {
     this.dialogRef.close();
   }
 }

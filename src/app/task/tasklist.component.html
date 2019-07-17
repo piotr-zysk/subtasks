@@ -14,9 +14,10 @@
 
 
       <div class="task-options">
-        <button mat-button appStopEventPropagation><mat-icon>edit</mat-icon></button>
         <button mat-button appStopEventPropagation
-        (click)="openTaskDeleteDialog(tasks.entities[taskId])"><mat-icon>delete</mat-icon></button>&nbsp;&nbsp;
+          (click)="openTaskEditFormDialog(tasks.entities[taskId])"><mat-icon>edit</mat-icon></button>
+        <button mat-button appStopEventPropagation
+          (click)="openTaskDeleteDialog(tasks.entities[taskId])"><mat-icon>delete</mat-icon></button>&nbsp;&nbsp;
       </div>
 
     </mat-expansion-panel-header>

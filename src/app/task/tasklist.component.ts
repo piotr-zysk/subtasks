@@ -7,6 +7,7 @@ import { TitleEditDialogComponent } from './title-edit-dialog/title-edit-dialog.
 import { fromEvent, from } from 'rxjs';
 import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { TaskDeleteDialogComponent } from './task-delete-dialog/task-delete-dialog.component';
+import { TaskEditFormDialogComponent } from './task-edit-form-dialog/task-edit-form-dialog.component';
 
 
 
@@ -110,8 +111,6 @@ export class TasklistComponent implements OnInit {
   }
 
   openTaskDeleteDialog(task: Task): void {
-
-
     const dialogRef = this.dialog.open(TaskDeleteDialogComponent, {
       width: '400px',
       data: { task }
@@ -123,7 +122,19 @@ export class TasklistComponent implements OnInit {
         this.tasks.ids = this.tasks.ids.filter(el => el !== result.task.id);
         delete this.tasks.entities[result.task.id];
         // console.log('Delete task: ' + task.id);
-        console.log(this.tasks);
+        // console.log(this.tasks);
+      }
+    });
+  }
+
+  openTaskEditFormDialog(task: Task): void {
+    const dialogRef = this.dialog.open(TaskEditFormDialogComponent, {
+      width: '400px',
+      data: { task }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
       }
     });
   }

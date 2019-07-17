@@ -9,9 +9,11 @@ import { FormsModule } from '@angular/forms';
 import { TitleEditDialogComponent } from './title-edit-dialog/title-edit-dialog.component';
 import { FilterbyComponent } from './filterby/filterby.component';
 import { TaskDeleteDialogComponent } from './task-delete-dialog/task-delete-dialog.component';
+import { TaskEditFormDialogComponent } from './task-edit-form-dialog/task-edit-form-dialog.component';
+import { TaskEditFormComponent } from './task-edit-form/task-edit-form.component';
 
 @NgModule({
-  declarations: [TasklistComponent, TitleEditDialogComponent, FilterbyComponent, TaskDeleteDialogComponent],
+  declarations: [TasklistComponent, TitleEditDialogComponent, FilterbyComponent, TaskDeleteDialogComponent, TaskEditFormDialogComponent, TaskEditFormComponent],
   imports: [
     CommonModule,
     TaskRoutingModule,
@@ -20,7 +22,8 @@ import { TaskDeleteDialogComponent } from './task-delete-dialog/task-delete-dial
   ],
   entryComponents: [
     TitleEditDialogComponent,
-    TaskDeleteDialogComponent
+    TaskDeleteDialogComponent,
+    TaskEditFormDialogComponent
   ]
 })
 export class TaskModule { }
