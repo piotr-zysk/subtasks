@@ -127,15 +127,14 @@ export class TasklistComponent implements OnInit {
     });
   }
 
-  openTaskEditFormDialog(task: Task): void {
+  openTaskEditFormDialog(task?: Task): void {
+    if (!task) {
+      task = new Task();
+    }
     const dialogRef = this.dialog.open(TaskEditFormDialogComponent, {
       width: '600px',
       data: { task }
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-      }
-    });
   }
 }

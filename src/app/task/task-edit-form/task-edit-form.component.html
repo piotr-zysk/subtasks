@@ -1,13 +1,30 @@
 <form (ngSubmit)="save()" [formGroup]="taskForm">
     <mat-form-field class="title-input">
-        <input matInput placeholder="Task Title" value="{{this.task.title}}" formControlName="title" required>
-      </mat-form-field>
+      <input matInput placeholder="Task Title" formControlName="title" required>
+    </mat-form-field>
+    &nbsp;
+    <mat-checkbox formControlName="done">Done</mat-checkbox>
 
+    <div formArrayName="items" *ngFor="let item of items_.controls; let i=index">
+      <div [formGroupName]="i">
+      <mat-form-field class="title-input" id="{{'s'+i}}">
+          <input matInput placeholder="Subtask Title" formControlName="title"  id="{{'s'+i}}">
+        </mat-form-field>
+        &nbsp;
+        <mat-checkbox formControlName="done"  id="{{'s'+i}}">Done</mat-checkbox>
+        <button mat-button (click)="deleteItem(i)"><mat-icon>delete</mat-icon></button>
+      </div>
+    </div>
+
+    <button mat-button (click)="addItem()">+ Add Item</button>
+
+      <!-- add checkbox Done
+      add for -->
 </form>
 
 
 
 
   <button mat-button (click)="onCancel()">Cancel</button>
-  <button mat-button (click)="save()" [disabled]="!(taskForm.dirty && taskForm.valid)">Save Changes</button>
+  <button mat-button (click)="save()" [disabled]="!((taskForm.dirty || formChanged) && taskForm.valid)">Save Changes</button>
 
