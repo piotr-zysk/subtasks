@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import {
   MatAutocompleteModule,
@@ -37,6 +38,7 @@ import {
 import { StopEventPropagationDirective } from './stop-event-propagation.directive';
 
 const modules = [
+    DragDropModule,
     MatButtonModule,
     MatCheckboxModule,
     MatToolbarModule,
