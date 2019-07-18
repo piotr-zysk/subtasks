@@ -8,6 +8,7 @@ import { fromEvent, from } from 'rxjs';
 import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { TaskDeleteDialogComponent } from './task-delete-dialog/task-delete-dialog.component';
 import { TaskEditFormDialogComponent } from './task-edit-form-dialog/task-edit-form-dialog.component';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 
 
@@ -136,5 +137,11 @@ export class TasklistComponent implements OnInit {
       data: { task }
     });
 
+  }
+
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.filteredTaskIds, event.previousIndex, event.currentIndex);
+    // console.log(event);
+    console.log(this.tasks.ids);
   }
 }

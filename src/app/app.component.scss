@@ -55,4 +55,9 @@
 
 .menu-item {
   cursor: pointer;
+  outline: none;
+}
+
+.active {
+  background: #dddddd;
 }
