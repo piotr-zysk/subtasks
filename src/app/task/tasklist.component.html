@@ -22,16 +22,12 @@
 
     </mat-expansion-panel-header>
 
-    edit // toggle edit mode (add subtasks, edit all titles)
-
-    <div *ngFor="let item of tasks.entities[taskId].items; let i2 = index">
+    <div *ngFor="let item of tasks.entities[taskId].items; let i2 = index" class="task-item-checkbox">
       <mat-checkbox (click)="processSubtask(taskId,i2,item.id)" [(ngModel)]="item.done"></mat-checkbox>
-      <span appStopEventPropagation (click)="openTitleRenameDialog(tasks.entities[taskId],i2)">{{item.title}}</span>
+      <span appStopEventPropagation (click)="openTitleRenameDialog(tasks.entities[taskId],i2)" class="task-item">{{item.title}}</span>
     </div>
 
   </mat-expansion-panel>
-
-
 
   <!-- <mat-expansion-panel>
     <mat-expansion-panel-header>
@@ -43,3 +39,5 @@
   </mat-expansion-panel> -->
 
 </mat-accordion>
+
+<button mat-button (click)="openTaskEditFormDialog()" class="add-task-button">+ Add Task</button>

@@ -95,7 +95,18 @@ export class TaskEditFormComponent implements OnInit {
         t.items.push(ti);
       }
 
-      this.tasks.entities[this.task.id] = t;
+      if (t.id > 0) {
+        this.tasks.entities[this.task.id] = t;
+      } else { // new Task
+
+        // duze uproszczenie / workaround, docelowo nowe ID powinno byc nadane przez serwer bazy danych
+
+        const newId = Math.max.apply(null, this.tasks.ids) + 1;
+        t.id = newId;
+
+        this.tasks.entities[newId] = t;
+        this.tasks.ids.push(newId);
+      }
       // console.log(t);
       // console.log(this.tasks.entities[this.task.id] );
 
