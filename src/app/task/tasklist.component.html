@@ -2,7 +2,9 @@
 
 <mat-accordion>
 
-  <mat-expansion-panel *ngFor="let taskId of filteredTaskIds">
+  <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+
+  <mat-expansion-panel *ngFor="let taskId of filteredTaskIds" cdkDrag>
     <mat-expansion-panel-header>
       <mat-panel-title>
         <mat-checkbox appStopEventPropagation id="task{{taskId}}" (click)="processTask(taskId)"
@@ -37,6 +39,8 @@
     </mat-expansion-panel-header>
 
   </mat-expansion-panel> -->
+
+</div>
 
 </mat-accordion>
 
