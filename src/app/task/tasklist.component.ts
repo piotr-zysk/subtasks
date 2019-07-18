@@ -107,6 +107,7 @@ export class TasklistComponent implements OnInit {
         } else {
           this.tasks.entities[result.taskId].items[subtaskIndex].title = result.taskTitle;
         }
+        this.dataService.reApplyFilter();
       }
     });
   }
@@ -137,11 +138,15 @@ export class TasklistComponent implements OnInit {
       data: { task }
     });
 
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.dataService.reApplyFilter();
+        console.log(result);
+      }
+    });
   }
 
   drop(event: CdkDragDrop<string[]>) {
     moveItemInArray(this.filteredTaskIds, event.previousIndex, event.currentIndex);
-    // console.log(event);
-    console.log(this.tasks.ids);
   }
 }

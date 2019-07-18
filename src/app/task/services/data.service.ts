@@ -18,6 +18,7 @@ export class DataService {
   */
 
   filteredTaskIds: number[];
+  filter = '';
 
   private tasks: EntityState<Task> = {
     ids: [1, 11],
@@ -40,5 +41,16 @@ export class DataService {
 
   setAllTasks(tasks: EntityState<Task>) {
     this.tasks = tasks;
+  }
+
+  performFilter(filterBy: string): number[] {
+    filterBy = filterBy.toLowerCase();
+    return this.tasks.ids.filter((id: number) =>
+      (this.tasks.entities[id].title.toLowerCase().indexOf(filterBy) !== -1)
+      || (this.tasks.entities[id].items.some(item => item.title.toLowerCase().indexOf(filterBy) !== -1)));
+  }
+
+  reApplyFilter() {
+    this.filteredTaskIds = this.performFilter(this.filter);
   }
 }

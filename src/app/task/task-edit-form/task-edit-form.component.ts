@@ -121,6 +121,6 @@ export class TaskEditFormComponent implements OnInit {
       // console.log(this.taskForm);
     }
 
-    this.formClose.emit(false);
+    this.formClose.emit(true);
   }
 }

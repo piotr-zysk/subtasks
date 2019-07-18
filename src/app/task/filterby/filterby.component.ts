@@ -33,13 +33,6 @@ export class FilterbyComponent implements OnInit {
     this.filteredTaskIds = this.tasks.ids;
   }
 
-  performFilter(filterBy: string): number[] {
-    filterBy = filterBy.toLowerCase();
-    return this.tasks.ids.filter((id: number) =>
-      (this.tasks.entities[id].title.toLowerCase().indexOf(filterBy) !== -1)
-      || (this.tasks.entities[id].items.some(item => item.title.toLowerCase().indexOf(filterBy) !== -1)));
-
-  }
 
   ngOnInit() {
     const searchBox = document.getElementById('searchBox');
@@ -52,7 +45,8 @@ export class FilterbyComponent implements OnInit {
     );
 
     typeahead.subscribe(data => {
-      this.filteredTaskIds = this.performFilter(data);
+      this.dataService.filter = data;
+      this.filteredTaskIds = this.dataService.performFilter(data);
     });
 
   }
