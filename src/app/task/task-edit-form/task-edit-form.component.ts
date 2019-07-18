@@ -1,9 +1,10 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Task } from '../models/task';
-import { FormGroup, FormControl, FormBuilder, FormArray } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { DataService } from '../services/data.service';
 import { EntityState } from '../models/entitystate';
 import { TaskItem } from '../models/taskitem';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-task-edit-form',
@@ -35,18 +36,22 @@ export class TaskEditFormComponent implements OnInit {
   this.task.items.forEach(el => {
     this.items.push(this.fb.group({
       id: el.id,
-      title: el.title,
+      title: [el.title, [Validators.required, Validators.minLength(3)]],
       done: el.done
     }));
-
   });
 
 
   this.taskForm = this.fb.group({
-      title: this.task.title,
+      title: [this.task.title, [Validators.required, Validators.minLength(3)]],
       done: this.task.done,
       items: this.fb.array(this.items)
      });
+
+  this.taskForm.get('title').valueChanges.pipe(debounceTime(500)).subscribe(value => {
+      console.log(value);
+      // this.taskForm.get('done').setValue(true);
+    });
 
   }
 
@@ -80,7 +85,7 @@ export class TaskEditFormComponent implements OnInit {
   save() {
     if ((this.taskForm.dirty || this.formChanged) && this.taskForm.valid) {
       const t = new Task();
-      t.id = this.taskForm.value.id;
+      t.id = this.task.id;
       t.title = this.taskForm.value.title;
       t.done = this.taskForm.value.done;
       t.items = [];
@@ -107,7 +112,8 @@ export class TaskEditFormComponent implements OnInit {
         this.tasks.entities[newId] = t;
         this.tasks.ids.push(newId);
       }
-      // console.log(t);
+
+      console.log(t);
       // console.log(this.tasks.entities[this.task.id] );
 
       // this.tasks.entities[this.task.id].title = this.taskForm.value.title;

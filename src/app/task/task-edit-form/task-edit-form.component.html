@@ -1,6 +1,6 @@
 <form (ngSubmit)="save()" [formGroup]="taskForm">
     <mat-form-field class="title-input">
-      <input matInput placeholder="Task Title" formControlName="title" required>
+      <input matInput placeholder="Task Title" formControlName="title">
     </mat-form-field>
     &nbsp;
     <mat-checkbox formControlName="done">Done</mat-checkbox>
