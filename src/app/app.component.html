@@ -13,6 +13,7 @@
     <mat-list>
         <mat-list-item class="menu-item" [routerLink]="['test']" routerLinkActive="active">Test Page</mat-list-item>
         <mat-list-item class="menu-item" [routerLink]="['task']" routerLinkActive="active">Tasks</mat-list-item>
+        <mat-list-item class="menu-item" (click)="updateDB()">Synchronize</mat-list-item>
       <mat-list-item *ngFor="let item of items" class="menu-item">{{item}}</mat-list-item>
     </mat-list>
 

@@ -3,6 +3,7 @@ import { Task } from './task/models/task';
 import { TaskEditFormDialogComponent } from './task/task-edit-form-dialog/task-edit-form-dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { DataService } from './task/services/data.service';
 
 const SMALL_WIDTH_BREAKPOINT = 720;
 
@@ -27,7 +28,7 @@ export class AppComponent {
   private mediaMatcher: MediaQueryList =
     matchMedia(`(max-width: ${SMALL_WIDTH_BREAKPOINT}px)`);
 
-  constructor(zone: NgZone, public dialog: MatDialog, private router: Router) {
+  constructor(zone: NgZone, public dialog: MatDialog, private router: Router, private dataservice: DataService) {
     this.mediaMatcher.addEventListener('change', mql =>
       zone.run(() => this.mediaMatcher = this.mediaMatcher));
   }
@@ -39,6 +40,10 @@ export class AppComponent {
 
   gotoTestPage() {
     this.router.navigate(['/test']);
+  }
+
+  updateDB() {
+    this.dataservice.updateDB();
   }
 
 }
