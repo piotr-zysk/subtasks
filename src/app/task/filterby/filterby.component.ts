@@ -4,6 +4,7 @@ import { EntityState } from '../models/entitystate';
 import { Task } from '../models/task';
 import { fromEvent } from 'rxjs';
 import { map, filter, debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { TaskEntityState } from '../models/task-entitystate';
 
 @Component({
   selector: 'app-filterby',
@@ -21,12 +22,12 @@ export class FilterbyComponent implements OnInit {
   }
 
 
-  get tasks(): EntityState<Task> {
+  get tasks(): TaskEntityState {
     return this.dataService.getAllTasks();
   }
 
   // this is actually not needed as long as we reference tasks and only mutate that object
-  set tasks(value: EntityState<Task>) {
+  set tasks(value: TaskEntityState) {
     this.dataService.setAllTasks(value);
   }
   constructor(private dataService: DataService) {
