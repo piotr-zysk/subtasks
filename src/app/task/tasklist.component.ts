@@ -9,6 +9,7 @@ import { map, filter, debounceTime, distinctUntilChanged, switchMap } from 'rxjs
 import { TaskDeleteDialogComponent } from './task-delete-dialog/task-delete-dialog.component';
 import { TaskEditFormDialogComponent } from './task-edit-form-dialog/task-edit-form-dialog.component';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { TaskEntityState } from './models/task-entitystate';
 
 
 
@@ -28,11 +29,11 @@ export class TasklistComponent implements OnInit {
     this.dataService.filteredTaskIds = value;
   }
 
-  get tasks(): EntityState<Task> {
+  get tasks(): TaskEntityState {
     return this.dataService.getAllTasks();
   }
   // this is actually not needed as long as we reference tasks and only mutate that object
-  set tasks(value: EntityState<Task>) {
+  set tasks(value: TaskEntityState) {
     this.dataService.setAllTasks(value);
   }
 
@@ -102,6 +103,7 @@ export class TasklistComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.tasks.setDirty(result.taskId);
         if (result.subtaskIndex === -1) {
           this.tasks.entities[result.taskId].title = result.taskTitle;
         } else {
@@ -120,6 +122,7 @@ export class TasklistComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        this.tasks.markDeletedTask(result.task);
         this.filteredTaskIds = this.filteredTaskIds.filter(el => el !== result.task.id);
         this.tasks.ids = this.tasks.ids.filter(el => el !== result.task.id);
         delete this.tasks.entities[result.task.id];
@@ -141,7 +144,6 @@ export class TasklistComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.dataService.reApplyFilter();
-        console.log(result);
       }
     });
   }

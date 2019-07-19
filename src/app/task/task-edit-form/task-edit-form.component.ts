@@ -5,6 +5,7 @@ import { DataService } from '../services/data.service';
 import { EntityState } from '../models/entitystate';
 import { TaskItem } from '../models/taskitem';
 import { debounceTime } from 'rxjs/operators';
+import { TaskEntityState } from '../models/task-entitystate';
 
 @Component({
   selector: 'app-task-edit-form',
@@ -18,17 +19,18 @@ export class TaskEditFormComponent implements OnInit {
 
   taskForm: FormGroup;
 
-  get tasks(): EntityState<Task> {
+  get tasks(): TaskEntityState {
     return this.dataService.getAllTasks();
   }
   // this is actually not needed as long as we reference tasks and only mutate that object
-  set tasks(value: EntityState<Task>) {
+  set tasks(value: TaskEntityState) {
     this.dataService.setAllTasks(value);
   }
   constructor(private dataService: DataService, private fb: FormBuilder) { }
 
   items = [];
   formChanged = false;
+  deletedItems = [];
 
   ngOnInit() {
 
@@ -49,7 +51,6 @@ export class TaskEditFormComponent implements OnInit {
      });
 
   this.taskForm.get('title').valueChanges.pipe(debounceTime(500)).subscribe(value => {
-      console.log(value);
       // this.taskForm.get('done').setValue(true);
     });
 
@@ -71,6 +72,7 @@ export class TaskEditFormComponent implements OnInit {
   }
 
   deleteItem(id: number) {
+    this.deletedItems.push(this.items_.controls[id].value.id);
     this.items_.removeAt(id);
     this.formChanged = true;
     // console.log(this.taskForm);
@@ -84,13 +86,15 @@ export class TaskEditFormComponent implements OnInit {
 
   save() {
     if ((this.taskForm.dirty || this.formChanged) && this.taskForm.valid) {
+
+      this.deletedItems.forEach(el => this.tasks.markDeletedItem(el));
+
       const t = new Task();
       t.id = this.task.id;
       t.title = this.taskForm.value.title;
       t.done = this.taskForm.value.done;
       t.items = [];
 
-      // console.log(this.taskForm.value.items.length);
       // tslint:disable-next-line: prefer-for-of
       for (let x = 0; x < this.taskForm.value.items.length; x++) {
         const ti = new TaskItem();
@@ -101,24 +105,10 @@ export class TaskEditFormComponent implements OnInit {
       }
 
       if (t.id > 0) {
-        this.tasks.entities[this.task.id] = t;
-      } else { // new Task
-
-        // duze uproszczenie / workaround, docelowo nowe ID powinno byc nadane przez serwer bazy danych
-
-        const newId = Math.max.apply(null, this.tasks.ids) + 1;
-        t.id = newId;
-
-        this.tasks.entities[newId] = t;
-        this.tasks.ids.push(newId);
+        this.tasks.update(t);
+      } else {
+        this.tasks.add(t);
       }
-
-      console.log(t);
-      // console.log(this.tasks.entities[this.task.id] );
-
-      // this.tasks.entities[this.task.id].title = this.taskForm.value.title;
-      // this.tasks.entities[this.task.id].done = this.taskForm.value.done;
-      // console.log(this.taskForm);
     }
 
     this.formClose.emit(true);
