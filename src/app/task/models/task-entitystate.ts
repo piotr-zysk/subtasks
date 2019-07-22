@@ -6,12 +6,18 @@ export class TaskEntityState implements EntityState<Task>  {
   entities: { [id: number]: Task };
   state: State;
 
-  constructor() {
+  constructor(t?: TaskEntityState) {
+    if (t) {
+    this.ids = t.ids;
+    this.entities = t.entities;
+    } else {
     this.ids = [];
     this.entities = {};
+    }
     // tslint:disable-next-line: no-use-before-declare
     this.state = new State();
   }
+
 
   add(element: Task) {
 

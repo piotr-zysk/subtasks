@@ -40,6 +40,8 @@ export class TasklistComponent implements OnInit {
   constructor(private dataService: DataService, public dialog: MatDialog) { }
 
   ngOnInit() {
+    this.dataService.getAllTasksFromDB();
+
     // const filteredTasksIdsAsync = from(this.filteredTaskIds);
 
     // filteredTasksIdsAsync.subscribe(data => {
