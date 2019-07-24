@@ -18,6 +18,7 @@ export class TaskEditFormComponent implements OnInit {
   @Output() formClose: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   taskForm: FormGroup;
+  newTask: boolean;
 
   get tasks(): TaskEntityState {
     return this.dataService.getAllTasks();
@@ -34,6 +35,13 @@ export class TaskEditFormComponent implements OnInit {
 
   ngOnInit() {
 
+  if (this.task.id === 0) {
+      this.tasks.state.maxId++;
+      this.task.id = this.tasks.state.maxId;
+      this.newTask = true;
+    } else {
+      this.newTask = false;
+    }
 
   this.task.items.forEach(el => {
     this.items.push(this.fb.group({
@@ -61,8 +69,9 @@ export class TaskEditFormComponent implements OnInit {
   }
 
   addItem() {
+      this.tasks.state.maxId++;
       this.items_.push(this.fb.group({
-        id: 0,
+        id: this.tasks.state.maxId,
         title: '',
         done: false
       })
@@ -104,10 +113,10 @@ export class TaskEditFormComponent implements OnInit {
         t.items.push(ti);
       }
 
-      if (t.id > 0) {
-        this.tasks.update(t);
-      } else {
+      if (this.newTask) {
         this.tasks.add(t);
+      } else {
+        this.tasks.update(t);
       }
     }
 

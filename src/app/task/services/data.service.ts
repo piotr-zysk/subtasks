@@ -22,10 +22,22 @@ export class DataService {
     this.tasks.add({id: 11, title: 'epdflepfjrj', items: [
               { id: 13, title: 'deodjeo' }, { id: 14, title: 'edeoepppw' }, { id: 15, title: 'eded dwd   wedwew' }]});
     this.tasks.resetState();
+    this.tasks.state.maxId = this.getMaxId();
 
     // this.getAllTasksFromDB();
 
    }
+
+  getMaxId(): number {
+    let maxId = 0;
+    for (const e of Object.values(this.tasks.entities)) {
+      if (e.id > maxId) { maxId = e.id; }
+      e.items.forEach(i => {
+        if (i.id > maxId) { maxId = i.id; }
+      });
+    }
+    return maxId;
+  }
 
   getAllTasks(): TaskEntityState {
     return this.tasks;

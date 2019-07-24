@@ -10,22 +10,17 @@ export class TaskEntityState implements EntityState<Task>  {
     if (t) {
     this.ids = t.ids;
     this.entities = t.entities;
+    this.state = t.state;
     } else {
     this.ids = [];
     this.entities = {};
-    }
     // tslint:disable-next-line: no-use-before-declare
     this.state = new State();
+    }
   }
 
 
   add(element: Task) {
-
-    if (element.id === 0) {
-      // duze uproszczenie / workaround, docelowo nowe ID powinno byc nadane przez serwer bazy danych
-      const newId = Math.max.apply(null, this.ids) + 1;
-      element.id = newId;
-    }
     this.entities[element.id] = element;
     this.ids.push(element.id);
     this.setDirty(element.id);
@@ -61,9 +56,11 @@ export class TaskEntityState implements EntityState<Task>  {
 class State {
   itemsToDelete: number[];
   outOfSync: number[];
+  maxId: number;
 
   constructor() {
     this.itemsToDelete = []; // ids of all leads (tasks, subtasks) to be deleted from backend database
     this.outOfSync = []; // ids of dirty tasks (needed to be updated in backend/databases)
+    this.maxId = 0;
   }
 }

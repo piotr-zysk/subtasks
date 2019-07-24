@@ -3,6 +3,7 @@ export interface EntityState<V> {
   entities: { [id: number]: V };
   state?: {
     itemsToDelete: number[],
-    outOfSync: number[]
+    outOfSync: number[],
+    maxId: number
   };
 }
