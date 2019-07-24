@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Task } from '../models/task';
 import { EntityState} from '../models/entitystate';
 import { TaskEntityState } from '../models/task-entitystate';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -66,9 +66,19 @@ export class DataService {
     changes.ids = this.tasks.ids;
     changes.state.outOfSync.forEach(el => changes.entities[el] = this.tasks.entities[el]);
 
-    console.log(changes);
+    // console.log(changes);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json'
+      })
+    };
+    this.http.post<TaskEntityState>(this.apiUrl + 'save', changes, httpOptions).subscribe(x => {
+      this.tasks.resetState();
+      this.reApplyFilter();
+      console.log('State saved.');
+    });
 
-    this.getAllTasksFromDB();
+    // this.getAllTasksFromDB();
   }
 
   getAllTasksFromDB() {

@@ -45,7 +45,7 @@ export class TaskEntityState implements EntityState<Task>  {
     if (this.state.outOfSync.indexOf(task.id) !== -1) { this.state.outOfSync = this.state.outOfSync.filter(el => el !== task.id); }
     this.state.itemsToDelete.push(task.id);
     task.items.forEach(el => this.state.itemsToDelete.push(el.id));
-    console.log(this.state.itemsToDelete);
+    // console.log(this.state.itemsToDelete);
   }
 
   markDeletedItem(itemId: number) {
